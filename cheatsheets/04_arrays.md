@@ -127,6 +127,10 @@ $sum = array_reduce([1,2,3], fn($carry, $n) => $carry + $n, 0);
 ```
 ---
 
+echo '<pre>' // um code schön darzustellen
+print_r($)
+echo '</pre>'
+
 ## Quellen
 - [PHP Arrays](https://www.php.net/manual/en/language.types.array.php)  
 - [array_splice](https://www.php.net/manual/en/function.array-splice.php)  
