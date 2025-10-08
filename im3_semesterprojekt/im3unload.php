@@ -23,26 +23,7 @@ try {
     // um die maximale 'messzeit' pro 'location' zu finden und dann
     // die vollständigen Zeilen abzurufen.
 
-    $sql = "
-        SELECT 
-            t1.location, 
-            t1.counter, 
-            t1.messzeit
-        FROM 
-            im3_semesterprojekt t1
-        INNER JOIN (
-            SELECT 
-                location, 
-                MAX(messzeit) AS latest_messzeit
-            FROM 
-                im3_semesterprojekt
-            GROUP BY 
-                location
-        ) t2 
-        ON t1.location = t2.location AND t1.messzeit = t2.latest_messzeit
-        ORDER BY 
-            t1.location ASC
-    ";
+    $sql = "SELECT * FROM `im3_semesterprojekt`";
 
     // Bereitet die SQL-Anweisung vor und führt sie aus
     $stmt = $pdo->prepare($sql);
