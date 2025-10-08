@@ -1,13 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>im3</title>
+    <title>Zählerdaten Luzern</title>
     <link rel="stylesheet" href="im3style.css">
-</head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script></head>
 <body>
-    <h1>im3</h1>
-    <script src="im3script.js"></script>
+
+    <h1>Aktuelle Zählerstände Luzern</h1>
+
+    <div style="width: 80%; margin: 20px auto; height:500px" >
+        <canvas id="counterChart"></canvas>
+    </div>
+
+    
+    
+    <script src="im3script2.js" type="module"></script> 
 </body>
 </html>
