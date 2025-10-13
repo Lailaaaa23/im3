@@ -3,10 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Zählerdaten Luzern</title>
-    <link rel="stylesheet" href="im3style.css">
+    <link rel="stylesheet" href="/im3_semesterprojekt/im3style.css?v=2">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script></head>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+</head>
 <body>
+
+    <header class="page-hero">
+    <h1>Was läuft in Lozärn?</h1>
+  </header>
+
+  <!-- STARTSCREEN: Karte -->
+  <section class="map-section">
+    <div id="map" class="map">
+      <!-- Hintergrund-Karte (tausche den Pfad auf dein Bild aus) -->
+      <img class="map-bg" src="img/karte.png" alt="Stadtplan von Luzern" />
+      <!-- Pins & Info-Bubble werden von JS eingefügt -->
+    </div>
+  </section>
 
     <h1>Aktuelle Zählerstände Luzern</h1>
 
@@ -16,6 +30,6 @@
 
     
     
-    <script src="im3script2.js" type="module"></script> 
+    <script src="im3script3.js" type="module"></script> 
 </body>
 </html>
