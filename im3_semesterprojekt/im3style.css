@@ -12,7 +12,22 @@ th { background-color: #f2f2f2; }
   --card-text:#ffffff;
   --radius-lg:24px;
   --shadow:0 10px 30px rgba(0,0,0,.12);
+  --font-sans: 'Kanit', sans-serif;
 }
+
+body{
+  font-family:var(--font-sans);
+  background:#f1efe6;
+  color:#2c2c2c;
+  line-height:1.5;
+  margin:0; padding:0 0 40px;
+}
+
+.font-black-italic {
+       font-weight: 900;   /* Black */
+       font-style: italic; /* Italic */
+       font-family: var(--font-sans); /* Deine Kanit-Schrift */
+   }
 
 /* Hero */
 .page-hero h1{
