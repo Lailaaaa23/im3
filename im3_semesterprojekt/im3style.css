@@ -1,102 +1,234 @@
+/* =============================
+   Design Tokens
+============================== */
+:root {
+  /* Brand palette (approx. from Figma) */
+  --brand: #b899f2;   /* purple */
+  --brand-600: #a382ee;
+  --sage: #6f887f;    /* green card */
+  --ink: #2c2c2c;     /* text */
+  --paper: #f1efe6;   /* background */
 
+  /* Typography */
+  --font-sans: 'Kanit', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Arial, "Noto Sans", sans-serif;
 
-/* Optional: Ein bisschen CSS für die Tabelle */
-table { border-collapse: collapse; width: 80%; margin: 20px auto; }
-th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-th { background-color: #f2f2f2; }
-
-:root{
-  --brand:#b899f2;
-  --sage:#6f887f;
-  --card:#b89af2; /* Bubble-Farbe wie im Figma-Lila */
-  --card-text:#ffffff;
-  --radius-lg:24px;
-  --shadow:0 10px 30px rgba(0,0,0,.12);
-  --font-sans: 'Kanit', sans-serif;
+  /* Effects */
+  --radius-lg: 24px;
+  --radius-md: 18px;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
 }
 
-body{
-  background:#f1efe6;
-  color:#2c2c2c;
-  line-height:1.5;
-  margin:0; padding:0 0 40px;
+/* =============================
+   Base / Resets
+============================== */
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  padding: 0 0 40px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  line-height: 1.5;
 }
 
-.font-black-italic {
-       font-weight: 900;   /* Black */
-       font-style: italic; /* Italic */
-       font-family: var(--font-sans); /* Deine Kanit-Schrift */
-   }
+/* Utility for italic black heading like in Figma */
+.font-black-italic { font-weight: 900; font-style: italic; font-family: var(--font-sans); }
 
-/* Hero */
-.page-hero h1{
-  margin:16px auto 8px;
-  text-align:center;
-  font-weight:900;
-  font-size:clamp(2rem,2.8vw+1rem,3.2rem);
+/* Headings */
+h1, h2, h3 { font-weight: 900; letter-spacing: .3px; margin: 0; }
+
+/* =============================
+   Tables (optional)
+============================== */
+table { border-collapse: collapse; width: min(1200px, 90vw); margin: 20px auto; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); }
+th, td { border-bottom: 1px solid #e6e6e6; padding: 12px 14px; text-align: left; }
+th { background: #f5f6f8; font-weight: 700; }
+tr:last-child td { border-bottom: 0; }
+
+/* =============================
+   Hero
+============================== */
+.page-hero h1 {
+  margin: 16px auto 8px;
+  text-align: center;
+  font-size: clamp(2rem, 2.4vw + 1rem, 3.2rem);
 }
 
-/* Map-Container */
-.map-section{ width:min(1400px,95vw); margin:16px auto 40px; }
-.map{
-  position:relative;
-  overflow:hidden;
-}
-.map-bg{
-  display:block;
-  width:100%;
-  height:auto;
-  object-fit:cover;
+/* =============================
+   Map + Pins
+============================== */
+.map-section { margin: 16px auto 40px; }
+
+.map {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
 }
 
-/* Pins */
+.map-bg {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
 .pin {
-  position:absolute;
-  transform:translate(-50%,-50%);
-  background:transparent;
-  border:0;
-  cursor:pointer;
-  padding:0;
-}
-.pin:focus-visible{ outline:3px solid var(--brand); outline-offset:2px; border-radius:50%; }
-
-.pin-dot{
-  display:block;
-  width:20px; height:20px;           /* Icon-Grösse – bei Bedarf anpassen */
-  border-radius:50%;
-  background:#f1efe6;                 /* Basis – deine Icon-Grafik kann hier als background-image hinterlegt werden */
-  border:6px solid #2c2c2c33;
-  box-shadow:0 4px 16px rgba(0,0,0,.2);
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
 }
 
-/* Info-Bubble */
-#infoCard{
-  max-width:min(520px, 60vw);
-  pointer-events:none; /* Klicks gehen „durch“ die Bubble – schliesst mit Klick auf Karte */
-}
-.bubble{
-  background:var(--brand);
-  color:var(--card-text);
-  border-radius:20px;
-  padding:18px 20px;
-  filter:drop-shadow(0 8px 18px rgba(0,0,0,.2));
-}
-.bubble-title{
-  font-weight:800;
-  font-size:1.1rem;
-  margin-bottom:6px;
-}
-.bubble-line{ margin:4px 0; font-weight:600; }
-.bubble-muted{ opacity:.85; font-style:italic; }
+.pin:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; border-radius: 50%; }
 
-/* Screen-Reader-Only */
-.sr-only{
-  position:absolute!important; 
-  width:1px;height:1px; 
-  padding:0;margin:-1px; 
-  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
+/* Icon size responsive with clamp: min 52px, pref 8vw, max 96px */
+.pin .pin-img {
+  display: block;
+  width: 18vw;
+  height: 18vw;
+  object-fit: cover;
+  transition: transform .08s ease-in-out;
 }
 
-img.pin-img {
-    width: 200px;
+.pin:hover .pin-img { transform: translateY(-2px) scale(1.02); }
+
+/* Info bubble on map */
+#infoCard { max-width: min(520px, 60vw); pointer-events: none; }
+
+.bubble {
+  background: var(--brand);
+  color: #fff;
+  border-radius: 20px;
+  padding: 18px 20px;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.2));
 }
+
+.bubble-title { font-weight: 800; font-size: 1.1rem; margin-bottom: 6px; }
+.bubble-line { margin: 4px 0; font-weight: 600; }
+.bubble-muted { opacity: .85; font-style: italic; }
+
+/* Screen-reader only */
+.sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+/* =============================
+   Buttons
+============================== */
+.btn-primary {
+  display: inline-block;
+  border: 0;
+  cursor: pointer;
+  background: var(--brand);
+  color: #fff;
+  font-weight: 900;
+  font-size: clamp(1rem, 1.2vw + 0.6rem, 1.6rem);
+  padding: clamp(0.8rem, 1.6vw, 2rem) clamp(1.6rem, 3vw, 3rem);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow);
+  transition: transform .06s ease-in-out;
+}
+
+.btn-primary:hover { transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+
+/* =============================
+   Chart Card
+============================== */
+.chart-card {
+  width: min(1200px, 90vw);
+  margin: 24px auto 40px;
+  padding: 16px;
+  background: var(--sage);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.chart-card canvas {
+  display: block;
+  width: 100% !important;
+  height: clamp(360px, 50vh, 560px) !important;
+  border-radius: calc(var(--radius-lg) - 4px);
+}
+
+/* =============================
+   Visit Planner (Calendar + Time)
+============================== */
+.predict-section { width: min(1200px, 92vw); margin: 32px auto 18px; }
+
+.predict-section h2 {
+  font-size: clamp(1.6rem, 2.2vw + 1rem, 2.6rem);
+  color: var(--brand);
+  text-align: left;
+  margin: 0 0 20px;
+  font-weight: 900;
+}
+
+.predict-wrap { display: grid; grid-template-columns: 1fr 320px; gap: 28px; align-items: start; }
+
+/* Calendar */
+.cal-card { background: var(--sage); color: #fff; border-radius: 22px; padding: 16px 18px 20px; box-shadow: var(--shadow); }
+
+.cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.cal-title { font-weight: 900; font-size: 1.4rem; letter-spacing: .3px; }
+
+.cal-nav { background: #ffffff22; color: #fff; border: 0; border-radius: 10px; padding: 6px 10px; cursor: pointer; }
+.cal-nav:hover { background: #ffffff33; }
+
+.cal-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; opacity: .9; font-weight: 700; margin: 8px 2px; }
+.cal-weekdays span { text-align: center; }
+
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; }
+
+.cal-day {
+  background: #1f2937;
+  color: #fff;
+  border: 0;
+  border-radius: 999px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 8px auto;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.cal-day[disabled] { opacity: .35; cursor: default; }
+.cal-day.is-today { outline: 3px solid #fff; }
+.cal-day.is-selected { background: #ffffff; color: #1f2937; }
+
+/* Time dropdown */
+.time-card { background: var(--sage); color: #fff; border-radius: 18px; padding: 12px; box-shadow: var(--shadow); position: relative; }
+
+.time-toggle { width: 100%; background: #ffffff22; color: #fff; border: 0; border-radius: 12px; padding: 14px 16px; font-weight: 900; cursor: pointer; text-align: left; }
+
+.time-list { list-style: none; margin: 10px 0 0; padding: 0; display: none; }
+.time-list.show { display: block; }
+.time-list li { background: #ffffff22; margin: 10px 0; padding: 14px 16px; border-radius: 16px; font-weight: 800; cursor: pointer; }
+.time-list li:hover { background: #ffffff33; }
+
+.predict-actions { margin-top: 18px; display: flex; align-items: center; gap: 16px; }
+
+/* Prediction result card */
+.predict-result {
+  background: var(--sage);
+  color: #fff;
+  border-radius: 26px;
+  padding: 38px 46px 42px;
+  box-shadow: var(--shadow);
+  margin-top: 36px;
+  width: min(1200px, 90vw);
+  margin-inline: auto;
+}
+
+.predict-result p { margin: 0 0 12px; font-size: clamp(1rem, 0.9vw + 0.6rem, 1.4rem); font-style: italic; font-weight: 700; }
+.predict-result strong { display: block; font-size: clamp(2rem, 2.8vw + 0.8rem, 3rem); font-weight: 900; margin: 18px 0; }
+.predict-result .predict-footer { font-size: clamp(1rem, 0.8vw + 0.4rem, 1.3rem); font-style: italic; font-weight: 700; }
+
+@media (max-width: 900px) { .predict-wrap { grid-template-columns: 1fr; } }

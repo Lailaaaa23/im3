@@ -22,6 +22,44 @@
     </div>
   </section>
 
+  <!-- VISIT PLANNER: Kalender + Uhrzeit -->
+  <section class="predict-section" aria-labelledby="predictTitle">
+    <h2 id="predictTitle" class="font-black-italic">Wann möchtest du Lozärn besuchen?</h2>
+
+    <div class="predict-wrap">
+      <!-- Kalender -->
+      <div class="cal-card" aria-label="Kalender">
+        <div class="cal-header">
+          <button type="button" class="cal-nav" id="calPrev" aria-label="voriger Monat">◀</button>
+          <div class="cal-title"><span id="calMonth">März</span> <span id="calYear">2026</span></div>
+          <button type="button" class="cal-nav" id="calNext" aria-label="nächster Monat">▶</button>
+        </div>
+        <div class="cal-weekdays">
+          <span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span>Sa</span><span>So</span>
+        </div>
+        <div class="cal-grid" id="calGrid" role="grid" aria-labelledby="calMonth"></div>
+      </div>
+
+      <!-- Dropdown Uhrzeit -->
+      <div class="time-card">
+        <button type="button" class="time-toggle" id="timeToggle" aria-expanded="false">Uhrzeit ▾</button>
+        <ul class="time-list" id="timeList" role="listbox" aria-label="Uhrzeit auswählen">
+          <li role="option" data-time="08:00">08:00 Uhr</li>
+          <li role="option" data-time="10:00">10:00 Uhr</li>
+          <li role="option" data-time="12:00">12:00 Uhr</li>
+          <li role="option" data-time="15:00">15:00 Uhr</li>
+          <li role="option" data-time="18:00">18:00 Uhr</li>
+          <li role="option" data-time="21:00">21:00 Uhr</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="predict-actions">
+      <button type="button" id="predictBtn" class="btn-primary">Auswahl bestätigen</button>
+      <p id="predictOutput" class="predict-output" aria-live="polite"></p>
+    </div>
+  </section>
+
   <h1 class="font-black-italic">Aktuelle Zählerstände Lozärn</h1>
 
     <div style="width: 80%; margin: 20px auto; height:500px" >

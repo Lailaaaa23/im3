@@ -18,6 +18,8 @@ const MAP_ICONS = {
   "Kapellbrücke": "/im3_semesterprojekt/img/icon_5.png",
 };
 
+let RAW_DATA = [];
+
 function formatCH(dateLike) {
   const d = new Date(dateLike);
   const pad = (n) => String(n).padStart(2, "0");
@@ -39,6 +41,7 @@ function loadDataAndDisplay() {
     })
     .then((dataArray) => {
       if (!Array.isArray(dataArray) || dataArray.length === 0) return;
+      RAW_DATA = dataArray;
 
       // Gruppieren nach Standort
       const grouped = dataArray.reduce((acc, it) => {
@@ -293,4 +296,136 @@ document.addEventListener("DOMContentLoaded", () => {
   if (document.getElementById("map")) {
     initStartScreen();
   }
+  if (document.getElementById('calGrid')) { initPlanner(); }
 });
+
+// ===== Visit Planner (Calendar + Time) with simple prediction =====
+function initPlanner(){
+  const calGrid = document.getElementById('calGrid');
+  const calMonthEl = document.getElementById('calMonth');
+  const calYearEl = document.getElementById('calYear');
+  const prevBtn = document.getElementById('calPrev');
+  const nextBtn = document.getElementById('calNext');
+  const timeToggle = document.getElementById('timeToggle');
+  const timeList = document.getElementById('timeList');
+  const predictBtn = document.getElementById('predictBtn');
+  const predictOutput = document.getElementById('predictOutput');
+
+  if(!calGrid || !calMonthEl || !calYearEl) return; // planner not on page
+
+  const months = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+  let viewDate = new Date();
+  let selectedDate = null; // JS Date
+  let selectedTime = null; // string HH:MM
+
+  function renderCalendar(date){
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    calMonthEl.textContent = months[month];
+    calYearEl.textContent = year;
+
+    // start Monday
+    const first = new Date(year, month, 1);
+    const startDay = (first.getDay() + 6) % 7; // 0 = Monday
+    const daysInMonth = new Date(year, month+1, 0).getDate();
+
+    // Compute today's midnight
+    const todayMid = new Date();
+    todayMid.setHours(0,0,0,0);
+
+    calGrid.innerHTML = '';
+    for(let i=0;i<startDay;i++) calGrid.appendChild(document.createElement('div'));
+    for(let d=1; d<=daysInMonth; d++){
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'cal-day';
+      btn.textContent = d;
+      const thisDate = new Date(year, month, d);
+      if(isSameDate(thisDate, new Date())) btn.classList.add('is-today');
+      const isPast = thisDate.getTime() < todayMid.getTime();
+      if(isPast){
+        btn.setAttribute('disabled','');
+        btn.setAttribute('aria-disabled','true');
+        btn.title = 'Vergangener Tag';
+      } else {
+        btn.addEventListener('click', ()=>{
+          selectedDate = thisDate;
+          document.querySelectorAll('.cal-day.is-selected').forEach(el=>el.classList.remove('is-selected'));
+          btn.classList.add('is-selected');
+        });
+      }
+      calGrid.appendChild(btn);
+    }
+  }
+  function isSameDate(a,b){ return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate(); }
+
+  prevBtn?.addEventListener('click', ()=>{ viewDate.setMonth(viewDate.getMonth()-1); renderCalendar(viewDate); });
+  nextBtn?.addEventListener('click', ()=>{ viewDate.setMonth(viewDate.getMonth()+1); renderCalendar(viewDate); });
+
+  timeToggle?.addEventListener('click', ()=>{
+    const show = !timeList.classList.contains('show');
+    timeList.classList.toggle('show', show);
+    timeToggle.setAttribute('aria-expanded', String(show));
+  });
+  timeList?.addEventListener('click', (e)=>{
+    const li = e.target.closest('li');
+    if(!li) return;
+    selectedTime = li.dataset.time;
+    timeToggle.textContent = `Uhrzeit: ${selectedTime}`;
+    timeList.classList.remove('show');
+    timeToggle.setAttribute('aria-expanded', 'false');
+  });
+
+  predictBtn?.addEventListener('click', ()=>{
+    if(!selectedDate || !selectedTime){
+      predictOutput.textContent = 'Bitte wähle Datum und Uhrzeit.';
+      return;
+    }
+    const est = estimateVisitors(selectedDate, selectedTime);
+    const dd = String(selectedDate.getDate()).padStart(2,'0');
+    const mm = String(selectedDate.getMonth()+1).padStart(2,'0');
+    const yyyy = selectedDate.getFullYear();
+    predictOutput.classList.add('predict-result');
+    predictOutput.innerHTML = `
+      <p>Die geschätzte Auslastung am ${dd}.${mm}.${yyyy} um ${selectedTime} in Luzern liegt bei</p>
+      <strong>${est.toLocaleString('de-CH')} Besucher:innen</strong>
+      <p class="predict-footer">Viu Spass bi dim Usflug uf Lozärn!</p>
+    `;
+  });
+
+  renderCalendar(viewDate);
+}
+
+// Simple heuristic: average of last 30 days, matching weekday and hour across all locations
+function estimateVisitors(dateObj, timeStr){
+  try {
+    if(!Array.isArray(RAW_DATA) || RAW_DATA.length===0) return 0;
+    const [hStr] = timeStr.split(':');
+    const targetHour = Number(hStr);
+    const targetWk = dateObj.getDay(); // 0=Sun
+    const now = new Date();
+    const cutoff = now.getTime() - 90*24*60*60*1000; // last 90 days
+
+    // group by location to avoid bias if some locations have more entries
+    const byLoc = RAW_DATA.reduce((acc, it)=>{
+      const t = new Date(it.messzeit).getTime();
+      if(isNaN(t) || t < cutoff) return acc;
+      const d = new Date(t);
+      const wk = d.getDay();
+      const hr = d.getHours();
+      if(wk !== targetWk || hr !== targetHour) return acc;
+      (acc[it.location] ||= []).push(Number(it.counter)||0);
+      return acc;
+    }, {});
+
+    // average per location, then sum
+    let total = 0;
+    Object.values(byLoc).forEach(arr=>{
+      if(arr.length){ total += arr.reduce((s,n)=>s+n,0)/arr.length; }
+    });
+    return Math.round(total);
+  } catch(e){
+    console.error('estimateVisitors error', e);
+    return 0;
+  }
+}
