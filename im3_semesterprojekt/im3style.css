@@ -16,7 +16,6 @@ th { background-color: #f2f2f2; }
 }
 
 body{
-  font-family:var(--font-sans);
   background:#f1efe6;
   color:#2c2c2c;
   line-height:1.5;
