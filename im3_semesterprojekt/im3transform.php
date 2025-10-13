@@ -16,7 +16,7 @@ function transformData(array $inputData): string {
 
     // Mapping: API-Location-Namen auf Anzeigenamen mappen
     $locationMap = [
-        "Kapellbruecke"   => "Kappelbrücke",
+        "Kapellbruecke"   => "Kapellbrücke",
         "Loewendenkmal"   => "Löwendenkmal",
         "Hertensteinstr"  => "Hertensteinstrasse",
         "Rathausquai"     => "Rathausquai",
