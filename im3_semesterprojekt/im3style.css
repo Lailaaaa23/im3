@@ -265,6 +265,29 @@ tr:last-child td { border-bottom: 0; }
     height: clamp(34px, 11vw, 42px);
     margin: 6px auto;
   }
+
+  /* Mobile Anpassung der Info-Bubbles auf der Karte */
+  .bubble {
+    padding: 10px 12px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+  }
+
+  .bubble-title {
+    font-size: 0.9rem;
+  }
+
+  .bubble-line {
+    font-size: 0.75rem;
+  }
+
+  .bubble-muted {
+    font-size: 0.7rem;
+  }
+
+  #infoCard {
+    max-width: 80vw;
+  }
 }
 
 /* =============================

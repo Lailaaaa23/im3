@@ -50,6 +50,10 @@ function launchConfettiForCount(count, clientX, clientY) {
   const BURST_SIZE = 160;
   let remaining = total;
 
+  // Detect if mobile screen (smaller confetti)
+  const isMobile = window.innerWidth < 768;
+  const confettiScalar = isMobile ? 0.6 : 1.2;
+
   const shoot = () => {
     const n = Math.min(remaining, BURST_SIZE);
     remaining -= n;
@@ -59,7 +63,7 @@ function launchConfettiForCount(count, clientX, clientY) {
       startVelocity: 36,
       gravity: 0.95,
       ticks: 220,
-      scalar: 1.05,
+      scalar: confettiScalar,
       origin,
       disableForReducedMotion: true,
       colors: ['#b899f2', '#a382ee', '#ffffff', '#6f887f', '#2c2c2c'],
@@ -292,12 +296,40 @@ async function initStartScreen() {
         <div class="bubble-line bubble-muted">Letzte Aktualisierung: ${formatCH(rec.messzeit)}</div>
       </div>
     `;
-    // Position Info-Bubble rechts oben vom Pin (leicht versetzt)
+    // Position Info-Bubble: messen und innerhalb der Map halten
     const pos = MAP_POSITIONS[loc];
-    const x = Math.max(0, Math.min(100, pos?.x ?? 50));
-    const y = Math.max(0, Math.min(100, pos?.y ?? 50));
-    infoCard.style.left = `${x + 3}%`;
-    infoCard.style.top = `${y - 3}%`;
+    const xPct = Math.max(0, Math.min(100, pos?.x ?? 50));
+    const yPct = Math.max(0, Math.min(100, pos?.y ?? 50));
+
+    // Nach dem Einfügen einen Frame warten, damit Maße stimmen
+    requestAnimationFrame(() => {
+      const mapRect = mapEl.getBoundingClientRect();
+      const cardRect = infoCard.getBoundingClientRect();
+
+      // Pin-Position in Pixel relativ zur Map
+      const pinX = (xPct / 100) * mapRect.width;
+      const pinY = (yPct / 100) * mapRect.height;
+
+      // Standardversatz: rechts-oben neben dem Pin
+      let leftPx = pinX + 12;
+      let topPx = pinY - 12;
+
+      // Wenn rechts übersteht -> nach links flippen
+      if (leftPx + cardRect.width > mapRect.width - 8) {
+        leftPx = Math.max(8, pinX - cardRect.width - 12);
+      }
+      // Links clampen
+      if (leftPx < 8) leftPx = 8;
+
+      // Vertikal clampen
+      if (topPx < 8) topPx = 8;
+      const maxTop = mapRect.height - cardRect.height - 8;
+      if (topPx > maxTop) topPx = Math.max(8, maxTop);
+
+      // Absolut innerhalb der Map setzen (px)
+      infoCard.style.left = `${leftPx}px`;
+      infoCard.style.top = `${topPx}px`;
+    });
   }
 
   // Pins rendern
