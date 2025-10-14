@@ -170,7 +170,7 @@ function loadDataAndDisplay() {
             },
             y: {
               beginAtZero: true,
-              title: { display: true, text: "Anzahl Zaehlungen" },
+              title: { display: true, text: "Anzahl Zählungen" },
               ticks: { precision: 0 },
             },
           },
