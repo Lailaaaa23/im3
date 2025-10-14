@@ -215,7 +215,20 @@ tr:last-child td { border-bottom: 0; }
 .time-list li { background: #ffffff22; margin: 10px 0; padding: 14px 16px; border-radius: 16px; font-weight: 800; cursor: pointer; }
 .time-list li:hover { background: #ffffff33; }
 
-.predict-actions { margin-top: 18px; display: flex; align-items: center; gap: 16px; }
+.predict-actions {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;  /* untereinander statt nebeneinander */
+  align-items: center;     /* Button horizontal zentriert */
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+  width: 100%;
+}
+
+.predict-actions .predict-output {
+  width: 100%;
+}
 
 /* Prediction result card */
 .predict-result {
@@ -233,7 +246,32 @@ tr:last-child td { border-bottom: 0; }
 .predict-result strong { display: block; font-size: clamp(2rem, 2.8vw + 0.8rem, 3rem); font-weight: 900; margin: 18px 0; }
 .predict-result .predict-footer { font-size: clamp(1rem, 0.8vw + 0.4rem, 1.3rem); font-style: italic; font-weight: 700; }
 
-@media (max-width: 900px) { .predict-wrap { grid-template-columns: 1fr; } }
+@media (max-width: 900px) {
+  .predict-wrap { grid-template-columns: 1fr; }
+  .cal-card, .time-card {
+    width: 100%;
+    max-width: 95vw;
+    box-sizing: border-box;
+    margin-inline: auto;
+  }
+  /* Mobile tuning: Calendar should never overflow */
+  .cal-card {
+    padding: 12px;          /* weniger Innenabstand */
+    overflow: hidden;       /* schneidet potentielles Überstehen ab */
+  }
+  .cal-weekdays {
+    gap: 6px;               /* kleinere Abstände der Wochentage */
+    margin: 6px 2px;
+  }
+  .cal-grid {
+    gap: 6px;               /* kleinere Abstände der Tage */
+  }
+  .cal-day {
+    width: clamp(34px, 11vw, 42px);   /* kleinere, responsive Kreise */
+    height: clamp(34px, 11vw, 42px);
+    margin: 6px auto;
+  }
+}
 
 /* =============================
    Marquee-Effekt (Laufschrift) - KORREKTUR
