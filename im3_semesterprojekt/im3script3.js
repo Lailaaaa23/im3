@@ -30,6 +30,45 @@ function average(arr) {
   if (!arr.length) return 0;
   return arr.reduce((s, n) => s + n, 0) / arr.length;
 }
+
+// === Confetti helper (uses canvas-confetti) ===
+// Fires a burst with exactly `count` particles (capped for safety), originating near the click.
+function launchConfettiForCount(count, clientX, clientY) {
+  if (typeof confetti !== 'function' || !count) return;
+
+  // Normalize click position to viewport [0..1] as required by canvas-confetti `origin`
+  const origin = {
+    x: Math.min(Math.max(clientX / window.innerWidth, 0), 1),
+    y: Math.min(Math.max(clientY / window.innerHeight, 0), 1),
+  };
+
+  // Safety cap to avoid freezing the browser on very large numbers
+  const MAX_TOTAL = 2000;
+  const total = Math.min(Math.max(0, Math.floor(count)), MAX_TOTAL);
+
+  // Fire in small batches to keep animation smooth while preserving exact `total`
+  const BURST_SIZE = 160;
+  let remaining = total;
+
+  const shoot = () => {
+    const n = Math.min(remaining, BURST_SIZE);
+    remaining -= n;
+    confetti({
+      particleCount: n,
+      spread: 70,
+      startVelocity: 36,
+      gravity: 0.95,
+      ticks: 220,
+      scalar: 1.05,
+      origin,
+      disableForReducedMotion: true,
+      colors: ['#b899f2', '#a382ee', '#ffffff', '#6f887f', '#2c2c2c'],
+    });
+    if (remaining > 0) requestAnimationFrame(shoot);
+  };
+
+  shoot();
+}
 function loadDataAndDisplay() {
   const apiUrl = API_URL;
   const chartCanvas = document.getElementById("counterChart");
@@ -277,6 +316,9 @@ async function initStartScreen() {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
       showInfo(loc);
+      const current = Number(latestByLoc[loc]?.counter) || 0;
+      // Fire confetti at the click position with exactly `current` particles (capped internally)
+      launchConfettiForCount(current, e.clientX, e.clientY);
     });
     btn.style.pointerEvents = "auto";
     pinsLayer.appendChild(btn);
