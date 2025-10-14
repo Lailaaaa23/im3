@@ -232,3 +232,45 @@ tr:last-child td { border-bottom: 0; }
 .predict-result .predict-footer { font-size: clamp(1rem, 0.8vw + 0.4rem, 1.3rem); font-style: italic; font-weight: 700; }
 
 @media (max-width: 900px) { .predict-wrap { grid-template-columns: 1fr; } }
+
+/* =============================
+   Marquee-Effekt (Laufschrift) - KORREKTUR
+============================== */
+
+/* 1. Wrapper (h1): Ansichtsbereich definieren */
+.running-text-wrapper {
+       width: 100%;
+       text-align: left; 
+       /* Wichtig: Inhalte außerhalb dieses Bereichs abschneiden */
+       overflow: hidden; 
+       /* Füge eine Mindesthöhe hinzu, falls der h1 sonst zusammenfällt */
+       line-height: 1.2; 
+     }
+     
+     /* 2. Content (span): Alle Kopien in eine Reihe bringen */
+     .running-text-content {
+       /* Text in einer einzigen Zeile halten */
+       white-space: nowrap; 
+       /* Ermöglicht die korrekte Breitenberechnung und Verschiebung */
+       display: inline-block; 
+       
+       /* Startposition: Wir starten bei 0% */
+       transform: translateX(0); 
+       
+       /* Animation anwenden: Name, Dauer, Timing (linear), Endlos */
+       /* Anpassung der Dauer: Da der Text 4x so lang ist, muss die Dauer angepasst werden */
+       animation: marquee-loop 8s linear infinite; 
+     }
+     
+     /* 3. Keyframes: Die Bewegung definieren */
+     @keyframes marquee-loop {
+       /* Startpunkt: Der gesamte Block beginnt an der normalen Position */
+       0% {
+         transform: translateX(0%);
+       }
+       /* Endpunkt: Der Block wird um die Breite eines EINZELNEN der vier Titel verschoben */
+       100% {
+         /* WICHTIG: Verschiebung um -25%, da der sichtbare Bereich nur 1/4 der Gesamtbreite ist. */
+         transform: translateX(-25%); 
+       }
+     }
