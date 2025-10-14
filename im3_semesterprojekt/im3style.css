@@ -37,7 +37,7 @@ body {
 }
 
 /* Utility for italic black heading like in Figma */
-.font-black-italic { font-weight: 900; font-style: italic; font-family: var(--font-sans); }
+.font-black-italic { font-weight: 900; font-style: italic; font-family: var(--font-sans); margin-bottom: 20px; margin-top: 50px; text-align: center; }
 
 /* Headings */
 h1, h2, h3 { font-weight: 900; letter-spacing: .3px; margin: 0; }

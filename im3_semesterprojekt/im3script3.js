@@ -195,7 +195,7 @@ function loadDataAndDisplay() {
             },
             title: {
               display: true,
-              text: "Entwicklung der Zaehlstaende pro Standort ueber die Zeit",
+              text: "Entwicklung der Zählstände pro Standort über die Zeit",
             },
             tooltip: {
               callbacks: {
