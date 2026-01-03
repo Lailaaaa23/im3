@@ -15,13 +15,12 @@ In diesem Projekt wurde eine Webanwendung entwickelt, die in Echtzeit sowie übe
 	•	Korrektes Transformieren und Speichern der API-Daten in der eigenen Datenbank
 	•	Aufbau einer stabilen Datenbankstruktur sowie Fehleranalyse beim Schreiben der Daten
 	•	Weiterverarbeitung und Darstellung der gespeicherten Daten im Frontend
-	•	Versionskonflikte durch paralleles Arbeiten mit unterschiedlichen Zwischenstaenden auf GitHub
+	•	Durcheinander auf GitHub. Verschiedene Zwischenstände gleichzeitig hochgeladen.
 
 ⸻
 
 # Benutzte Ressourcen
-	•	Visitor Frequencies Lucerne API
-https://www.freepublicapis.com/visitor-frequencies-lucerne-ch
+	•	Visitor Frequencies Lucerne API https://www.freepublicapis.com/visitor-frequencies-lucerne-ch
 	•	PHP-Dokumentation
 	•	MySQL-Dokumentation
 	•	Visual Studio Code
