@@ -1,57 +1,30 @@
 # IM3 HS25 – PHP & Datenbanken
 
-Willkommen im Code-Repository für _IM3 – PHP & Datenbanken_ an der FH Graubünden. Dieses Repository enthält Übungsdateien, Code-Alongs und Lösungen zu PHP, Datenbankzugriff, APIs und ETL-Themen.
+In diesem Projekt wurde eine Webanwendung entwickelt, die in Echtzeit sowie über einen zeitlichen Verlauf darstellt, wie viele Menschen sich aktuell an bestimmten Orten in Luzern aufhalten. Die Daten werden regelmaessig über eine externe API abgerufen, mittels PHP transformiert und in einer eigenen MySQL-Datenbank gespeichert. Auf der Webseite werden die aggregierten Daten visuell aufbereitet und in Form von Kennzahlen, Diagrammen und einer Stadtkarte nutzerfreundlich dargestellt.
 
----
+Learnings
+	•	Umsetzung eines vollständigen ETL-Prozesses mit PHP
+	•	Arbeiten mit zeitabhaengigen Live-Daten aus einer API
+	•	Speicherung und Abfrage von Daten in einer Datenbank
+	•	Strukturierte Zusammenarbeit in GitHub mit zwei Personen
 
-## 📂 Inhalt des Repositories
+Schwierigkeiten
+	•	Korrektes Speichern der API-Daten in der eigenen Datenbank
+	•	Aufbau einer stabilen Datenbankstruktur und Fehleranalyse beim Schreiben der Daten
+	•	Weiterverarbeiten der gespeicherten Daten im Frontend
+   •	Durcheinander auf GitHub. Zwei verschiedene Zwischenstände werden gleichzeitig auf GitHub geladen.
 
-| Ordner / Datei              | Zweck                                                                                                   |
-| --------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `code-alongs/`              | Kapitelweise Übungen (Studierende bearbeiten die Dateien in Vorlesung).                                 |
-| `code-alongs/.../solution/` | Musterlösungen zu den entsprechenden CodeAlongs.                                                        |
-| `cheatsheets/`              | Kurzreferenzen (Syntax, Best Practices, Beispiele) zu PHP, Datenbankoperationen, JSON, etc.             |
-| `etl-boilerplate/`          | Grundgerüst für ETL-Projekte (z. B. Extract / Transform / Load)                                         |
-| `IM3.sql`                   | SQL-Script zum Erstellen der benötigten Datenbankstruktur / Tabelle „User“.                             |
-| `config.php`                | Konfiguration der Datenbankverbindung (DSN, Benutzer, Passwort, Optionen). **Nicht** öffentlich teilen. |
-| `load.php`                  | Skript, welches schreibende DB-Operationen übernimmt (Daten einfügen).                                  |
-| `unload.php`                | Skript, das Daten aus der Datenbank abruft und ausgibt (z. B. als JSON).                                |
-| `index.html` und `js/`      | Frontend-Interaktion & Beispiel-Formulare / JS-Code, um mit den APIs (load/unload) zu arbeiten.         |
-| `solution/`                 | Vollständige Lösungen, kommentiert – zur Kontrolle & zum Vergleich nach den Vorlesungen.                |
+Benutzte Ressourcen
+	•	Visitor Frequencies Lucerne API (https://www.freepublicapis.com/visitor-frequencies-lucerne-ch)
+	•	PHP-Dokumentation
+	•	MySQL-Dokumentation
+	•	Visual Studio Code
+	•	GitHub
+	•	Kursunterlagen und Online-Tutorials zu PHP und Datenbanken
+   •	ChatGPT
 
----
+Guter Prompt
+   Du bist ein HTML/CSS Experte. Die Icons auf der Webseite werden falsch dargestellt. Setze die Grösse auf ...  und füge bei allen einen Margin von 20px hinzu.
 
-## 🎯 Lernziele & Themenbereiche
-
-Mit diesen Dateien und Übungen lernst Du:
-
-- PHP-Grundlagen: Syntax, Variablen, Bedingungen, Schleifen
-- Arbeiten mit Arrays & assoziativen Arrays
-- Funktionen, Rückgabewerte, Parameter und Default-Werte
-- Validierung und Sanitization von Benutzer-/URL-Parametern
-- Datenbankoperationen mit PDO: SELECT, INSERT, Prepared Statements
-- Umgang mit JSON in PHP: `json_encode`, `json_decode`
-- Simple ETL-Strukturen: Daten aus externen Quellen holen, transformieren und speichern
-- API-Endpunkte bauen: Anfrageparameter verarbeiten, Antworten als JSON bereitstellen
-
----
-
-## 🛠 Installation & Vorbereitung
-
-1. **Datenbank importieren**  
-   Führe `IM3.sql` aus, um die Tabelle(n) zu erstellen (z. B. User-Tabelle).
-   Eine aktueller Version findest du auf Moodle.
-
-2. **Konfiguration**  
-   Passe `config.php` an:
-   ```php
-   <?php
-   $dsn = 'mysql:host=localhost;dbname=deine_db;charset=utf8mb4';
-   $username = 'dein_user';
-   $password = 'dein_passwort';
-   $options = [
-     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-     PDO::ATTR_EMULATE_PREPARES => false
-   ];
-   ```
+Schlechter Prompt
+   Füge die Karte als Hintergrundbild auf der Webseite ein. (Hat überhaupt nicht funktioniert)
