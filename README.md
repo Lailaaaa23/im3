@@ -26,7 +26,7 @@ In diesem Projekt wurde eine Webanwendung entwickelt, die in Echtzeit sowie übe
 	•	Visual Studio Code
 	•	GitHub
 	•	Kursunterlagen und Online-Tutorials zu PHP und Datenbanken
-	•	ChatGPT (Unterstuetzung bei Debugging und Formulierungen)
+	•	ChatGPT
 
 ⸻
 
